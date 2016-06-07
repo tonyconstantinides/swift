@@ -120,7 +120,7 @@ func checkDecodeUTF<Codec : UnicodeCodec>(
       from: codec,
       to: UTF32.self,
       stoppingOnError: true,
-      sendingOutputTo: output)
+      into: output)
     expectGE(1, iterator.numTimesReturnedEOF)
     if expectedHead != decoded {
       return assertionFailure()
@@ -142,7 +142,7 @@ func checkDecodeUTF<Codec : UnicodeCodec>(
       from: codec,
       to: UTF32.self,
       stoppingOnError: false,
-      sendingOutputTo: output)
+      into: output)
     expectEqual(1, iterator.numTimesReturnedEOF)
     if expected != decoded {
       return assertionFailure()
@@ -188,7 +188,7 @@ func checkEncodeUTF8(_ expected: [UInt8],
     from: UTF32.self,
     to: UTF8.self,
     stoppingOnError: true,
-    sendingOutputTo: output)
+    into: output)
   expectFalse(hadError)
   expectGE(1, iterator.numTimesReturnedEOF)
   if expected != encoded {
@@ -2083,7 +2083,7 @@ UnicodeAPIs.test("transcode/MutableArray") {
     from: UTF16.self,
     to: UTF16.self,
     stoppingOnError: true,
-    sendingOutputTo: output)
+    into: output)
   expectEqual(input, transcoded)
 }
 
@@ -2096,7 +2096,7 @@ UnicodeAPIs.test("transcode/ReferenceTypedArray") {
     from: UTF16.self,
     to: UTF16.self,
     stoppingOnError: true,
-    sendingOutputTo: output)
+    into: output)
   expectEqual(input, transcoded)
 }
 
@@ -2124,7 +2124,7 @@ class NonContiguousNSString : NSString {
       from: UTF8.self,
       to: UTF16.self,
       stoppingOnError: true,
-      sendingOutputTo: output)
+      into: output)
     expectFalse(hadError)
     self.init(encoded)
   }
@@ -2143,7 +2143,7 @@ class NonContiguousNSString : NSString {
       from: UTF32.self,
       to: UTF16.self,
       stoppingOnError: true,
-      sendingOutputTo: output)
+      into: output)
     expectFalse(hadError)
     self.init(encoded)
   }
@@ -2204,7 +2204,7 @@ StringCookedViews.test("UTF8ForContiguousUTF16") {
       from: UTF32.self,
       to: UTF16.self,
       stoppingOnError: false,
-      sendingOutputTo: output)
+      into: output)
 
     backingStorage.withUnsafeBufferPointer {
       (ptr) -> Void in
@@ -2230,7 +2230,7 @@ StringCookedViews.test("UTF8ForContiguousUTF16") {
       from: UTF32.self,
       to: UTF8.self,
       stoppingOnError: false,
-      sendingOutputTo: output)
+      into: output)
 
     checkUTF8View(expected, subject, test.loc.withCurrentLoc())
   }
@@ -2281,7 +2281,7 @@ StringCookedViews.test("UTF8ForNonContiguousUTF16") {
         from: UTF32.self,
         to: UTF8.self,
         stoppingOnError: false,
-        sendingOutputTo: output)
+        into: output)
 
       var nss = NonContiguousNSString(test.encoded)
       verifyThatStringIsOpaqueForCoreFoundation(nss)
@@ -2354,7 +2354,7 @@ StringCookedViews.test("UTF16") {
       from: UTF32.self,
       to: UTF16.self,
       stoppingOnError: false,
-      sendingOutputTo: output)
+      into: output)
 
     var nss = NonContiguousNSString(test.scalars)
     checkUTF16View(expected, nss as String, test.loc.withCurrentLoc())
@@ -2371,7 +2371,7 @@ StringCookedViews.test("UTF16") {
       from: UTF32.self,
       to: UTF16.self,
       stoppingOnError: false,
-      sendingOutputTo: output)
+      into: output)
 
     checkUTF16View(expected, subject, test.loc.withCurrentLoc())
   }
