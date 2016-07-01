@@ -31,7 +31,7 @@ public class NonObjectiveCBase {
 public class ManagedProtoBuffer<Header, Element> : NonObjectiveCBase {
   /// The actual number of elements that can be stored in this object.
   ///
-  /// This header may be nontrivial to compute; it is usually a good
+  /// This value may be nontrivial to compute; it is usually a good
   /// idea to store this information in the "header" area when
   /// an instance is created.
   public final var capacity: Int {
