@@ -2459,7 +2459,8 @@ swift::swift_getForeignTypeMetadata(ForeignTypeMetadata *nonUnique) {
 
   // Okay, insert a new row.
   auto &Foreign = ForeignTypes.get();
-  ScopedLock guard(Foreign.Lock);
+  // FIXME: This is a temporary hack!
+  //ScopedLock guard(Foreign.Lock);
   
   auto insertResult = Foreign.Types.insert({GlobalString(nonUnique->getName()),
                                             nonUnique});
